@@ -431,10 +431,11 @@ app.listen(port, () => {
 });
 
 // - A GET endpoint /breweries to have a full list of breweries available. The return type expected is an array of objects.
+// commented out due to final query app.get
 
-app.get("/breweries", (req, res) => {
-  res.json(breweries);
-});
+// app.get("/breweries", (req, res) => {
+//   res.json(breweries);
+// });
 
 // - A GET endpoint /brewery/:id to have details of a single brewery, specifying an id (e.g /brewery/:9094).
 // The return type expected is a single object
@@ -443,9 +444,22 @@ app.get("/breweries/:id", (req, res) => {
   let breweryId = breweries.find(
     (brewery) => brewery.id === Number(req.params.id)
   );
-  res.json(breweryId);
+  res.json([breweryId]);
 });
 
 // - A GET endpoint /breweries?brewery_type=TYPE to have a filtered list by brewery_type. The return type expected is
 // (always) an array of objects. (e.g /breweries?brewery_type=micro should return an array of objects representing all
 // breweries having micro as brewery_type)
+
+app.get("/breweries", (req, res) => {
+  const { brewery_type } = req.query;
+
+  if (brewery_type) {
+    const filteredBreweries = breweries.filter((brewery) =>
+      brewery.brewery_type.includes(brewery_type)
+    );
+    res.json({ filteredBreweries });
+  } else {
+    res.json({ breweries });
+  }
+});
