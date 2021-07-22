@@ -1,3 +1,10 @@
+## Steps to take:
+
+- Export the .zip
+- Open the template in VS Code
+- Run npm install to install express, morgan and nodemon (dependencies found in package.json
+- Run npm start to get the server started
+
 ## What is Express.js?
 
 Express.js is a Node js web application server framework, which is specifically designed for building single-page, multi-page, and hybrid web applications.
