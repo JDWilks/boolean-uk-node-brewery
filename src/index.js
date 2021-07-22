@@ -407,9 +407,11 @@ const breweries = [
   },
 ];
 
+// express is a module - this line is saying use the express module
 const express = require("express");
+// morgan is middleware
 const morgan = require("morgan");
-
+// this line is creating an object of the express module
 const app = express();
 
 /* SETUP MIDDLEWARE */
@@ -431,7 +433,7 @@ app.listen(port, () => {
 });
 
 // - A GET endpoint /breweries to have a full list of breweries available. The return type expected is an array of objects.
-// commented out due to final query app.get
+// below commented out due to final query app.get
 
 // app.get("/breweries", (req, res) => {
 //   res.json(breweries);
@@ -461,5 +463,52 @@ app.get("/breweries", (req, res) => {
     res.json({ filteredBreweries });
   } else {
     res.json({ breweries });
+  }
+});
+
+/// just playing around....
+
+const myArrayOfInfo = [
+  {
+    name: "jonathon",
+    age: 21,
+  },
+  {
+    name: "bob",
+    age: 25,
+  },
+  {
+    name: "jim",
+    age: 26,
+  },
+];
+
+// this line creates a call back function
+app.get("/", function (req, res) {
+  //this line sends the string as a responce to the web page with the path /
+  res.send("Hello World!");
+});
+
+//creating path to display info on page
+app.get("/node", (req, res) => {
+  res.send("tutorial on node");
+});
+
+// creating path to display my new array
+app.get("/jonathon", (req, res) => {
+  res.json(myArrayOfInfo);
+});
+
+// getting a specific name from my array using req.query
+app.get("/myArrayOfInfo", (req, res) => {
+  const { name } = req.query;
+
+  if (name) {
+    const filteredjonathons = myArrayOfInfo.filter((person) =>
+      person.name.includes(name)
+    );
+    res.json({ filteredjonathons });
+  } else {
+    res.json({ myArrayOfInfo });
   }
 });
